@@ -11,17 +11,33 @@ class PostmanEchoTest {
     void shouldTestPostValue() {
         given()
                 .baseUri("https://postman-echo.com")
-                .body("some data")
+                .body("Кот")
                 .log().all()
         .when()
                 .post("/post")
         .then()
                 .statusCode(200)
-                .body("data", equalTo("some data"))
+                .body("data", equalTo("Кот"))
                 .contentType(ContentType.JSON)
                 .log().all()
         ;
     }
 
+    @Test
+    void shouldTestPostValueRu() {
+        given()
+                .baseUri("https://postman-echo.com")
+                .contentType("text/plain; charset=UTF-8")
+                .body("Пингвин")
 
+                .log().all()
+        .when()
+                .post("/post")
+        .then()
+                .statusCode(200)
+                .body("data", equalTo("Пингвин"))
+                .contentType(ContentType.JSON)
+                .log().all()
+        ;
+    }
 }
